@@ -77,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BRLMPJPrintSettings : NSObject <NSCoding, BRLMPrintSettingsProtocol, BRLMPrintImageSettings>
 
 
-@property (nonatomic) BRLMPJPrintSettingsPaperSize* paperSize;
+@property (nonatomic, retain) BRLMPJPrintSettingsPaperSize* paperSize;
 @property (nonatomic) BRLMPJPrintSettingsPaperType paperType;
 @property (nonatomic) BRLMPJPrintSettingsPaperInsertionPosition paperInsertionPosition;
 @property (nonatomic) BRLMPJPrintSettingsFeedMode feedMode;

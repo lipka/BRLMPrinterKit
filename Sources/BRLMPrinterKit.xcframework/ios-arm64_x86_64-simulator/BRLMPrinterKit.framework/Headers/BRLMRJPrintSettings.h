@@ -31,10 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BRLMRJPrintSettings : NSObject <NSCoding, BRLMPrintSettingsProtocol, BRLMPrintImageSettings>
 
 
-@property (nonatomic) BRLMCustomPaperSize* customPaperSize;
+@property (nonatomic, retain) BRLMCustomPaperSize* customPaperSize;
 @property (nonatomic) BRLMRJPrintSettingsDensity density;
-@property (nonatomic) BOOL rotate180degrees;
+@property (nonatomic) BOOL rotate180degrees __deprecated;
 @property (nonatomic) BOOL peelLabel;
+@property (nonatomic) NSUInteger feedDirectionMargins;
 
 // override
 - (nullable instancetype)initDefaultPrintSettingsWithPrinterModel:(BRLMPrinterModel)model;

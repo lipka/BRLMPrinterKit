@@ -4,3 +4,8 @@ framework module BRLMPrinterKit {
   export *
   module * { export * }
 }
+
+module BRLMPrinterKit.Swift {
+  header "BRLMPrinterKit-Swift.h"
+  requires objc
+}

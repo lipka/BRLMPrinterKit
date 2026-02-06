@@ -48,6 +48,7 @@ Default : 1
  */
 @property (nonatomic) UInt8 autoCutForEachPageCount;
 @property (nonatomic) BOOL forceVanishingMargin;
+@property (nonatomic) NSUInteger feedDirectionMargins;
 
 
 // override

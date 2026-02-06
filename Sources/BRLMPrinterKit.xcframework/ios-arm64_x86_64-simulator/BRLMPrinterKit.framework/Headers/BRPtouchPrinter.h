@@ -19,6 +19,12 @@
 #import <BRLMPrinterKit/BRCustomPaperInfoCommand.h>
 #include <BRLMPrinterKit/BRPtouchTemplateInfo.h>
 #include <BRLMPrinterKit/ImageCreationBlock.h>
+#import <BRLMPrinterKit/BRLMPtouchDeviceDependedDataHeader.h>
+#import <BRLMPrinterKit/BRLMPrinterConfigRequestOrder.h>
+#import <BRLMPrinterKit/BRLMPrinterConfigRequestResult.h>
+#import <BRLMPrinterKit/BRLMPrinterConfigUpdateOrder.h>
+#import <BRLMPrinterKit/BRLMPrinterConfigUpdateResult.h>
+#import <BRLMPrinterKit/BRLMChannelCredential.h>
 
 #define ERROR_NONE_          0
 #define ERROR_TIMEOUT		-3
@@ -78,6 +84,9 @@
 #define ERROR_MINIMUM_LENGTH_LIMIT_ -58
 #define ERROR_FAIL_TO_CONVERT_CSV_TO_BLF_ -59
 #define ERROR_RESOLUTION_MODE_ -60
+#define ERROR_MOTOR_SLOW_ -61
+#define ERROR_UNSUPPORTED_USB_CHARGER_ -62
+#define ERROR_UNSUPPORTED_OPTIONAL_EQUIPMENT_ -63
 
 
 //  Message value
@@ -180,6 +189,14 @@ typedef NS_ENUM(NSUInteger, CONNECTION_TYPE) {
     CONNECTION_TYPE_ERROR
 };
 
+typedef NS_ENUM(NSUInteger, BRPtouchPrinterGetPrinterInfoResult) {
+    BRPtouchPrinterGetPrinterInfoResult_SUCCESS = 0,
+    BRPtouchPrinterGetPrinterInfoResult_CONNECTIONERROR = 1,
+    BRPtouchPrinterGetPrinterInfoResult_UNSUPPORT = 2,
+    BRPtouchPrinterGetPrinterInfoResult_UNKNOWN = 3,
+};
+
+
 typedef unsigned char BRPtouchPrinterInternalModelTypeFlag;
 extern const BRPtouchPrinterInternalModelTypeFlag BRPtouchPrinterInternalModelTypeFlagUnsupported; // Unsupported
 extern const BRPtouchPrinterInternalModelTypeFlag BRPtouchPrinterInternalModelTypeFlagCommunicationFailed; // CommunicationFailed
@@ -202,6 +219,7 @@ extern NSString *const BRMessageKey;
 - (id)initWithPrinterName:(NSString*)strPrinterName interface:(CONNECTION_TYPE)type;
 - (NSString *)printerName;
 - (BOOL)setPrinterName:(NSString*)strPrinterName;
+- (void)setPrinterNameFromStatus:(BRPtouchPrinterStatus*)status;
 - (void)setPrintInfo:(BRPtouchPrintInfo*)printInfo;
 - (BOOL)setCustomPaperFile:(NSString*)strFilePath;
 - (NSArray *)setCustomPaperInfoCommand:(BRCustomPaperInfoCommand *)customPaperInfoCommand;
@@ -214,6 +232,7 @@ extern NSString *const BRMessageKey;
 - (int)getPTStatus:(PTSTATUSINFO*)status;
 - (int)getStatus:(BRPtouchPrinterStatus**)status;
 - (int)getStatus:(BRPtouchPrinterStatus**)status errorCode:(int *)errorCode;
+- (void)waitForPrinterResponce;
 - (NSString *)getModelName;
 - (NSString *)getFirmVersion;
 - (NSString *)getMediaVersion;
@@ -223,6 +242,14 @@ extern NSString *const BRMessageKey;
 
 - (BOOL)sendTemplateFile:(NSArray*)sendFileArray;
 - (BOOL)sendFirmwareFile:(NSArray*)sendFileArray;
+- (BOOL)sendFirmwareFiles:(NSArray*)sendFileArray;
+
+- (NSDictionary<NSURL*,NSNumber*/*BRLMTransferErrorCode*/>*)transferTemplateFiles:(NSArray*)sendFileArray dataProgress:( void (^)(NSURL* current, int progressPercentage))progressCallback;
+- (NSDictionary<NSURL*,NSNumber*/*BRLMTransferErrorCode*/>*)transferFirmwareFiles:(NSArray*)sendFileArray dataProgress:( void (^)(NSURL* current, int progressPercentage))progressCallback;
+- (NSDictionary<NSURL*,NSNumber*/*BRLMTransferErrorCode*/>*)transferDatabaseFiles:(NSArray*)sendFileArray dataProgress:( void (^)(NSURL* current, int progressPercentage))progressCallback;
+- (NSDictionary<NSURL*,NSNumber*/*BRLMTransferErrorCode*/>*)transferBinaryFiles:(NSArray*)sendFileArray dataProgress:( void (^)(NSURL* current, int progressPercentage))progressCallback;
+- (NSDictionary<NSNumber*,NSNumber*/*BRLMTransferErrorCode*/>*)transferBinaryData:(NSArray*)sendDataArray dataProgress:( void (^)(NSNumber* current, int progressPercentage))progressCallback;
+- (NSDictionary<NSURL*,NSNumber*/*BRLMTransferErrorCode*/>*)transferPrinterConfigurationFiles:(NSArray*)sendFileArray dataProgress:( void (^)(NSURL* current, int progressPercentage))progressCallback;
 
 - (int)sendTemplate:(NSString *)sendtemplateFilePath connectionType:(CONNECTION_TYPE) type;
 - (int)sendDatabase:(NSString *)databaseFilePath;
@@ -277,6 +304,17 @@ extern NSString *const BRMessageKey;
 - (int)setPrinterSettings:(NSDictionary*)printerSettings;
 - (int)getPrinterSettings:(NSDictionary**)printerSettings require:(NSArray*)require;
 
+- (void)setCredential:(BRLMChannelCredential*) credential;
+
+///This api is for Brother applications. We do not recommend you to use it.
+- (BRLMPrinterConfigRequestResult*)requestPrinterConfig:(BRLMPrinterConfigRequestOrder*)order;
+///This api is for Brother applications. We do not recommend you to use it.
+- (BRLMPrinterConfigUpdateResult*)updatePrinterConfig:(BRLMPrinterConfigUpdateOrder*)order;
+///This api is for Brother applications. We do not recommend you to use it.
 - (BRPtouchPrinterInternalModelTypeFlag)getPrinterInternalModelFlag;
+///This api is for Brother applications. We do not recommend you to use it.
+- (BRPtouchPrinterGetPrinterInfoResult)requestPtouchDeviceDependedDataHeaderList:(NSMutableArray<BRLMPtouchDeviceDependedDataHeader*> **)headers;
+///This api is for Brother applications. We do not recommend you to use it.
+- (BRPtouchPrinterGetPrinterInfoResult)requestBluetoothFirmVersion:(NSString **)version;
 
 @end

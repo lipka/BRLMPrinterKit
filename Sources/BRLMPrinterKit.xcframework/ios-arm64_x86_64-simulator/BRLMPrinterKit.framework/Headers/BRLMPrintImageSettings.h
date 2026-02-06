@@ -72,6 +72,7 @@ typedef NS_ENUM(NSInteger, BRLMPrintSettingsVerticalAlignment) {
 @property (nonatomic) NSUInteger numCopies;
 @property (nonatomic) BOOL skipStatusCheck;
 @property (nonatomic) BRLMPrintSettingsPrintQuality printQuality;
+@property (nonatomic) BOOL trimTrailingBlankData;
 
 
 + (instancetype)new  __unavailable;

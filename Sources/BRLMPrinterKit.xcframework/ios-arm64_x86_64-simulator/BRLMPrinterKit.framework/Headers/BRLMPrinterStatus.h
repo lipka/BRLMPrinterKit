@@ -58,6 +58,9 @@ typedef NS_ENUM(NSInteger, BRLMPrinterStatusErrorCode) {
     BRLMPrinterStatusErrorCodeBatteryEmpty,
     BRLMPrinterStatusErrorCodeBatteryTrouble,
     BRLMPrinterStatusErrorCodeTubeNotDetected,
+    BRLMPrinterStatusErrorCodeMotorSlow,
+    BRLMPrinterStatusErrorCodeUnsupportedCharger,
+    BRLMPrinterStatusErrorCodeIncompatibleOptionalEquipment,
     BRLMPrinterStatusErrorCodeSystemError,
     BRLMPrinterStatusErrorCodeAnotherError,
 };
@@ -73,6 +76,7 @@ typedef NS_ENUM(NSInteger, BRLMMediaInfoMediaType) {
     BRLMMediaInfoMediaTypePTFlexibleID,
     BRLMMediaInfoMediaTypePTSatin,
     BRLMMediaInfoMediaTypePTSelfLaminate,
+    BRLMMediaInfoMediaTypePTHeatShrink3_1,
     BRLMMediaInfoMediaTypeIncompatible,
     BRLMMediaInfoMediaTypeUnknown,
 };
@@ -111,6 +115,7 @@ typedef NS_ENUM(NSInteger, BRLMMediaInfoBackgroundColor) {
     BRLMMediaInfoBackgroundColorFabricPink,
     BRLMMediaInfoBackgroundColorFabricBlue,
     BRLMMediaInfoBackgroundColorTubeWhite,
+    BRLMMediaInfoBackgroundColorTubeInterminate,
     BRLMMediaInfoBackgroundColorSelfLaminatedWhite,
     BRLMMediaInfoBackgroundColorFlexibleWhite,
     BRLMMediaInfoBackgroundColorFlexibleYellow,

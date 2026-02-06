@@ -172,9 +172,11 @@
 #define RET_CHANNEL_WRITE_ERROR      -1009 // error occurred while writing data, such as if channel disconnected
 #define RET_CHANNEL_READ_ERROR       -1010 // error occurred while reading data, such as if channel disconnected
 
-// This is used only by WIFI and FILE channel.
 // In previous SDKs, RET_CHANNEL_CREATEERROR was used instead, but now we differentiate between these cases.
 // NOTE: With WIFI channel especially, this can occur when user tries to start a job too quickly after a failure.
+//       It may be reported only when trying to open the channel.
+// NOTE: With BT channel, it can be reported in open, send, or read, if error event occurs on stream.
+//       But I don't know how to cause it. Never seen it happen.
 #define RET_CHANNEL_STREAMSTATUS_ERROR     -1011
 
 // These are used only for BT channel
@@ -198,6 +200,10 @@
 #define RET_PRINTERSTATUS_ERROR_MEDIACANNOTBEFED       -1021 // This is different from media empty. Treated as an error.
 #define RET_PRINTERSTATUS_ERROR_UNKNOWNERROR           -1022 // If status response processor gets unhandled error
 
+//** 6/8/23: Added NEW error codes. Not changing old constants above, to be safe.
+// This occurs if "app switch" in middle of BT transfer (if no app support for background processing).
+// NOTE: It does not seem to happen on WIFI.
+#define RET_CHANNEL_STREAM_END_OCCURRED                -1023
 
 // *************************************************************************************
 
@@ -519,6 +525,22 @@ typedef struct _PTSTATUSINFO {
 //***** Misc Utilities
 - (CGRect) getPrintableRectFromCurrentSettings;
 - (CGRect) getPaperRectFromCurrentSettings;
+
+//********************************************************************************
+// detectPrinterResolutionForModel
+// Used to determine resolution of print head installed to TD23xx models ONLY
+// 203, 300 models have different byModelCode in Status Response
+// Each of these models supports only 1 resolution at a time.
+//
+// RETURNS:
+// * RET_TRUE on success, detectedResolution is VALID
+// * Other error code if FAILURE. detectedResolution is INVALID
+- (int) detectPrinterResolutionForModel:(PRINTERMODEL)model
+                            channelType:(CHANNELTYPE)channelType
+                          channelString:(NSString *)channelString // IPAddress or BTDeviceName
+                     detectedResolution:(RESOLUTION *)pResolution;
+//********************************************************************************
+
 
 //********************************************************************************
 // SIMPLE APIs

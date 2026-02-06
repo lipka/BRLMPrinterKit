@@ -31,12 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BRLMTDPrintSettings : NSObject <NSCoding, BRLMPrintSettingsProtocol, BRLMPrintImageSettings>
 
 
-@property (nonatomic) BRLMCustomPaperSize* customPaperSize;
+@property (nonatomic, retain) BRLMCustomPaperSize* customPaperSize;
 @property (nonatomic) BRLMTDPrintSettingsDensity density;
 @property (nonatomic) BOOL peelLabel;
 @property (nonatomic) BOOL autoCut;
 @property (nonatomic) BOOL cutAtEnd;
 @property (nonatomic) UInt8 autoCutForEachPageCount;
+@property (nonatomic) NSUInteger feedDirectionMargins;
+@property (nonatomic, copy) NSString* customRecord;
 
 // override
 - (nullable instancetype)initDefaultPrintSettingsWithPrinterModel:(BRLMPrinterModel)model;

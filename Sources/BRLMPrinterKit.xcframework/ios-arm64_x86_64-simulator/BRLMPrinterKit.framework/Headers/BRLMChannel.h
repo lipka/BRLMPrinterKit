@@ -12,11 +12,15 @@ typedef NSString BRLMExternalAccessorySerialNumber;
 
 typedef NSString BRLMChannelExtraInfoKey;
 
+extern BRLMChannelExtraInfoKey * _Nonnull const BRLMChannelExtraInfoKeyAdvertiseLocalName;
+extern BRLMChannelExtraInfoKey * _Nonnull const BRLMChannelExtraInfoKeyIpAddress;
 extern BRLMChannelExtraInfoKey * _Nonnull const BRLMChannelExtraInfoKeyModelName;
 extern BRLMChannelExtraInfoKey * _Nonnull const BRLMChannelExtraInfoKeySerialNumber;
 extern BRLMChannelExtraInfoKey * _Nonnull const BRLMChannelExtraInfoKeyMacAddress;
 extern BRLMChannelExtraInfoKey * _Nonnull const BRLMChannelExtraInfoKeyNodeName;
 extern BRLMChannelExtraInfoKey * _Nonnull const BRLMChannelExtraInfoKeyLocation;
+extern BRLMChannelExtraInfoKey * _Nonnull const BRLMChannelExtraInfoKeyIsSecureConnectionSupported;
+extern BRLMChannelExtraInfoKey * _Nonnull const BRLMChannelExtraInfoKeyIsCommandSecurityEnabled;
 
 
 NS_ASSUME_NONNULL_BEGIN

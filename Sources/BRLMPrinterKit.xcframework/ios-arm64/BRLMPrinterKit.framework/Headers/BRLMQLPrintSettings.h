@@ -71,6 +71,7 @@ Range(#) : -20 - 20
 Range(#) : -20 - 20
  */
 @property (nonatomic) NSUInteger biColorBlueEnhancement;
+@property (nonatomic) NSUInteger feedDirectionMargins;
 
 // override
 - (nullable instancetype)initDefaultPrintSettingsWithPrinterModel:(BRLMPrinterModel)model;
